@@ -20,8 +20,8 @@ class TransactionViewController: UIViewController {
     @IBOutlet weak var lblToTitle: UILabel!
     @IBOutlet weak var imgTo: UIImageView!
     
-    @IBOutlet weak var toView: CustomView!
-    @IBOutlet weak var fromView: CustomView!
+    @IBOutlet weak var toView: BorderView!
+    @IBOutlet weak var fromView: BorderView!
 
     let datePicker = DatePickerDialog()
     private var calculator = CalculatorLogic()

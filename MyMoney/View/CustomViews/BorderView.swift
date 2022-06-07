@@ -1,5 +1,5 @@
 //
-//  CustomView.swift
+//  BorderView.swift
 //  ExpenseTracker
 //
 //  Created by Piyush Mandaliya on 2022-04-04.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-@IBDesignable class CustomView: UIView {
+@IBDesignable class BorderView: UIView {
     
     @IBInspectable var borderWidth: CGFloat = 0.0{
         didSet{

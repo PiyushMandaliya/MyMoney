@@ -1,5 +1,5 @@
 //
-//  CustomButton.swift
+//  BorderButton.swift
 //  ExpenseTracker
 //
 //  Created by Piyush Mandaliya on 2022-04-04.
@@ -8,7 +8,7 @@
 import UIKit
 
 @IBDesignable
-class CustomButton: UIButton {
+class BorderButton: UIButton {
     
     @IBInspectable var borderWidth: CGFloat = 0.0{
         didSet{
