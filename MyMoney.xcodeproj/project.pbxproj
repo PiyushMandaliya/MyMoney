@@ -132,8 +132,8 @@
 		F4C0215127FB5CB3009CC422 /* BudgetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C0215027FB5CB3009CC422 /* BudgetsViewController.swift */; };
 		F4C0215327FB5CD8009CC422 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C0215227FB5CD8009CC422 /* AccountViewController.swift */; };
 		F4C0215627FB6E48009CC422 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C0215527FB6E48009CC422 /* TransactionViewController.swift */; };
-		F4C0215827FB72A6009CC422 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C0215727FB72A6009CC422 /* CustomView.swift */; };
-		F4C0215A27FB908E009CC422 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C0215927FB908E009CC422 /* CustomButton.swift */; };
+		F4C0215827FB72A6009CC422 /* BorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C0215727FB72A6009CC422 /* BorderView.swift */; };
+		F4C0215A27FB908E009CC422 /* BorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C0215927FB908E009CC422 /* BorderButton.swift */; };
 		F4C0215C27FBD811009CC422 /* CalculatorLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C0215B27FBD811009CC422 /* CalculatorLogic.swift */; };
 		F4C79A7727FF3CC6001AC974 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C79A7627FF3CC6001AC974 /* AccountCell.swift */; };
 		F4C79A7927FF45B2001AC974 /* AddAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C79A7827FF45B2001AC974 /* AddAccountViewController.swift */; };
@@ -319,8 +319,8 @@
 		F4C0215027FB5CB3009CC422 /* BudgetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetsViewController.swift; sourceTree = "<group>"; };
 		F4C0215227FB5CD8009CC422 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		F4C0215527FB6E48009CC422 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
-		F4C0215727FB72A6009CC422 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
-		F4C0215927FB908E009CC422 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		F4C0215727FB72A6009CC422 /* BorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderView.swift; sourceTree = "<group>"; };
+		F4C0215927FB908E009CC422 /* BorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderButton.swift; sourceTree = "<group>"; };
 		F4C0215B27FBD811009CC422 /* CalculatorLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorLogic.swift; sourceTree = "<group>"; };
 		F4C79A7627FF3CC6001AC974 /* AccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		F4C79A7827FF45B2001AC974 /* AddAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountViewController.swift; sourceTree = "<group>"; };
@@ -407,8 +407,8 @@
 			children = (
 				F46CAE2B27E18DA7004B588E /* OnBoardingView */,
 				F481D89D27FD312B007AD217 /* SectionView */,
-				F4C0215727FB72A6009CC422 /* CustomView.swift */,
-				F4C0215927FB908E009CC422 /* CustomButton.swift */,
+				F4C0215727FB72A6009CC422 /* BorderView.swift */,
+				F4C0215927FB908E009CC422 /* BorderButton.swift */,
 				F4B805132810E50C007B15B7 /* GradientProgressView.swift */,
 				F4A1C2FC2810EC4D00B57986 /* CustomBubbleView.swift */,
 				F47E8A1C2812F8F800091A54 /* AlertView.swift */,
@@ -1140,13 +1140,13 @@
 				F4E225542846946600F2D433 /* FloatingActionButton.swift in Sources */,
 				F4F9987E28453EBF00EE6F4E /* Constant.swift in Sources */,
 				F4C79A7927FF45B2001AC974 /* AddAccountViewController.swift in Sources */,
-				F4C0215827FB72A6009CC422 /* CustomView.swift in Sources */,
+				F4C0215827FB72A6009CC422 /* BorderView.swift in Sources */,
 				F4B805142810E50C007B15B7 /* GradientProgressView.swift in Sources */,
 				F458659E2807B40F0055F2C9 /* IconCell.swift in Sources */,
 				F4F9987928453C6F00EE6F4E /* UIImage+Ext.swift in Sources */,
 				F45D6F4F27DAE255009C88C7 /* ExpenseTracker.xcdatamodeld in Sources */,
 				F4C79A7727FF3CC6001AC974 /* AccountCell.swift in Sources */,
-				F4C0215A27FB908E009CC422 /* CustomButton.swift in Sources */,
+				F4C0215A27FB908E009CC422 /* BorderButton.swift in Sources */,
 				F4F998852845559400EE6F4E /* UIScrollView+Ext.swift in Sources */,
 				F45D6F7F27DAEBCA009C88C7 /* OnBoardingViewController.swift in Sources */,
 				F4C0215127FB5CB3009CC422 /* BudgetsViewController.swift in Sources */,
