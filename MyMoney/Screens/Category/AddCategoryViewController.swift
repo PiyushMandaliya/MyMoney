@@ -26,7 +26,7 @@ class AddCategoryViewController: UIViewController {
     var isUpdate: Bool              = false
     var selectedCategory: Category? = nil
     
-    let context     = CoreDataManager.shared.persistentContainer.viewContext
+    var categoryManager: CategoryManager!
     var delegate: CategoryDataDelegateProtocol? = nil
 //    
 //    init() {
@@ -51,6 +51,7 @@ class AddCategoryViewController: UIViewController {
         for i in 1...86{
             categoryImages.append("\(i).png")
         }
+        categoryManager = CategoryManager()
         iconCV.dataSource = self
         iconCV.delegate = self
         setDefaultValues()
@@ -87,18 +88,12 @@ extension AddCategoryViewController {
     func saveOrUpdateCategory(_ name: String, _ type: String, _ image: String ){
         var newCategory: Category!
         if isUpdate == true && selectedCategory != nil {
+            categoryManager.update(category: selectedCategory!, name: name, type: type, image: image)
             newCategory = selectedCategory!
-        }else{
-            newCategory = Category(context: self.context)
+        } else {
+            newCategory = categoryManager.create(name: name, type: type, image: image)
         }
-        newCategory.image = image
-        newCategory.type = type.lowercased()
-        newCategory.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.persistCategory(newCategory)
-    }
-    
-    func persistCategory(_ newCategory: Category){
-        CoreDataManager.shared.saveContext()
+        
         if self.delegate != nil {
             self.delegate?.sendDataToCategoryViewController(category: newCategory, isUpdate: isUpdate)
         }

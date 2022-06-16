@@ -27,7 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if AppManager.shared.isFirstLaunch {
             rootVC = storyboard.instantiateViewController(identifier: "onBoardViewController") as? OnBoardViewController
-            CoreDataManager.shared.setDefaultData()
+            AccountManager().initDefaultValue()
+            CategoryManager().initDefaultValue()
             AppManager.shared.isFirstLaunch = true
             
         }else{
@@ -54,7 +55,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        CoreDataManager.shared.saveContext()
+        StorageManager().save()
     }
 
 

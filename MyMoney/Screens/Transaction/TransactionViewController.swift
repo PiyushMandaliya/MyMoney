@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+
 class TransactionViewController: UIViewController {
     
     //UI Outlets
@@ -18,7 +20,9 @@ class TransactionViewController: UIViewController {
     @IBOutlet weak var lblFrom: UILabel!
     @IBOutlet weak var lblTo: UILabel!
     @IBOutlet weak var lblToTitle: UILabel!
+    @IBOutlet weak var lblFromTitle: UILabel!
     @IBOutlet weak var imgTo: UIImageView!
+    @IBOutlet weak var imgFrom: UIImageView!
     
     @IBOutlet weak var toView: BorderView!
     @IBOutlet weak var fromView: BorderView!
@@ -26,11 +30,18 @@ class TransactionViewController: UIViewController {
     let datePicker = DatePickerDialog()
     private var calculator = CalculatorLogic()
     private var isFinishedTypingNumber: Bool = true
+    private var transactionDate: Date = Date()
 
     var transactrionType = TransactionType.Expense
+    var fromSelected: Any!
+    var toSelected: Any!
     var accounts: [Account]? = [Account]()
     var expenseCategory: [Category]? = [Category]()
     var incomeCategory: [Category]? = [Category]()
+    
+    let categoryManager = CategoryManager()
+    let accountManager = AccountManager()
+    let transactionManager = TransactionManager()
     
     private var displayValue: Double {
         get {
@@ -39,6 +50,14 @@ class TransactionViewController: UIViewController {
         }
         set {
             displayLabel.text = String(newValue)
+        }
+    }
+    
+    
+    private var transactionNote: String {
+        get {
+            guard let note = (notesTextField.text) else { return "" }
+            return note
         }
     }
     
@@ -58,10 +77,13 @@ class TransactionViewController: UIViewController {
         configNavigationItems()
         
         dateTextField.delegate  = self
-        dateTextField.text      = Date().convertDateInDisplayFormat()
+        dateTextField.text      = transactionDate.convertDateInDisplayFormat()
         
-        let gesture             = UITapGestureRecognizer(target: self, action:  #selector (selectionPressed))
-        self.fromView.addGestureRecognizer(gesture)
+        let toViewGesture             = UITapGestureRecognizer(target: self, action:  #selector (categorySelectionPressed))
+        self.toView.addGestureRecognizer(toViewGesture)
+        
+        let fromViewGesture             = UITapGestureRecognizer(target: self, action:  #selector (accountSelectionPressed))
+        self.fromView.addGestureRecognizer(fromViewGesture)
     }
     
     
@@ -76,17 +98,18 @@ class TransactionViewController: UIViewController {
 extension TransactionViewController {
     
     func loadCategories() {
-        if let Categories = CoreDataManager.shared.getCategories() {
-            incomeCategory = Categories.filter({$0.type == TransactionType.Income})
-            expenseCategory = Categories.filter({$0.type == TransactionType.Expense})
-        }
+        let result = categoryManager.fetch()
+        incomeCategory  = result.filter({$0.type == TransactionType.Income})
+        expenseCategory = result.filter({$0.type == TransactionType.Expense})
+        
     }
     
     
     func loadAccounts(){
-        if let allAccounts = CoreDataManager.shared.getAccounts() {
+        let result = accountManager.fetch()
+        if result.count > 0 {
             accounts?.removeAll()
-            accounts = allAccounts
+            accounts = result
         }
     }
 }
@@ -95,18 +118,23 @@ extension TransactionViewController {
 //MARK: -  Outlets Action
 extension TransactionViewController {
     
-    @objc func selectionPressed() {
+    @objc func categorySelectionPressed() {
         let accountSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "AccountSelectionViewController") as! AccountSelectionViewController
 
-        accountSelectionVC.isAccountSelection = false
+        accountSelectionVC.delegate             = self
 
         if transactrionType == TransactionType.Income {
+            accountSelectionVC.isAccountSelection   = false
+            accountSelectionVC.isToSelection        = true
             accountSelectionVC.data = incomeCategory!
         } else if transactrionType == TransactionType.Expense {
             accountSelectionVC.data = expenseCategory!
+            accountSelectionVC.isAccountSelection   = false
+            accountSelectionVC.isToSelection        = true
         } else {
-            accountSelectionVC.data = accounts!
-            accountSelectionVC.isAccountSelection = true
+            accountSelectionVC.data                 = accounts!
+            accountSelectionVC.isToSelection        = true
+            accountSelectionVC.isAccountSelection   = true
         }
         
         accountSelectionVC.sheetPresentationController.selectedDetentIdentifier = .medium
@@ -114,7 +142,19 @@ extension TransactionViewController {
     }
     
     
+    @objc func accountSelectionPressed() {
+        let accountSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "AccountSelectionViewController") as! AccountSelectionViewController
+        accountSelectionVC.data                 = accounts!
+        accountSelectionVC.delegate             = self
+        accountSelectionVC.isAccountSelection   = true
+        accountSelectionVC.isToSelection        = false
+        accountSelectionVC.sheetPresentationController.selectedDetentIdentifier = .medium
+        present(accountSelectionVC, animated: true, completion: nil)
+    }
+    
+    
     @IBAction func transactionTypeChange(_ sender: UISegmentedControl) {
+        toSelected = nil
         switch sender.selectedSegmentIndex {
         case 0:
             transactrionType = TransactionType.Income
@@ -136,17 +176,31 @@ extension TransactionViewController {
         let formatter       = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .medium
-        print( formatter.string(from: sender.date))
+
     }
     
     
     @IBAction func editingDidEnd(_ sender: UIDatePicker) { }
         
     
-    @objc private func saveTransaction(){
-        navigationController?.popViewController(animated: true)
-    }
+    @objc private func saveTransaction() {
         
+        if displayValue > 0, let fromAccount = fromSelected, let toSelected = toSelected {
+            let account             = (fromAccount as! Account)
+            
+            let toCategory = toSelected is Category ? (toSelected as! Category) : nil
+            let toAccount = toSelected is Account ? (toSelected as! Account) : nil
+            
+            transactionManager.create(amount: displayValue, date: transactionDate, type: transactrionType, note: transactionNote, fromAccount: account, toCategory: toCategory, toAccount: toAccount)
+            
+            
+            goToRootViewController()
+        }else {
+            let alert = AlertView.showAlertBox(title: "Not done yet", message: "You haven't filled in the information we need to save this transaction for you.", firstAction: UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     
     @objc private func goToRootViewController(){
         navigationController?.popViewController(animated: true)
@@ -166,7 +220,8 @@ extension TransactionViewController {
                             maximumDate: currentDate,
                             datePickerMode: .dateAndTime) { (date) in
                 if let dt = date {
-                    self.dateTextField.text = dt.convertDateInDisplayFormat()
+                    self.transactionDate        = dt
+                    self.dateTextField.text     = self.transactionDate.convertDateInDisplayFormat()
                 }
             }
     }
@@ -217,6 +272,26 @@ extension TransactionViewController: UITextFieldDelegate {
     }
 }
 
+extension TransactionViewController: SelectionDelegate {
+    func didSelectAccount(selectedAccount: Account) {
+        fromSelected        = selectedAccount
+        lblFromTitle.text   = selectedAccount.name
+        imgFrom.image       = UIImage(named: (fromSelected as! Account).image!)
+    }
+    
+    func didSelectCategory(selectedCategory: Any) {
+        if selectedCategory is Category {
+            toSelected      =   selectedCategory as! Category
+            lblToTitle.text = (toSelected as! Category).name
+            imgTo.image     = UIImage(named: (toSelected as! Category).image!)
+        }else {
+            toSelected      =   selectedCategory as! Account
+            lblToTitle.text = (toSelected as! Account).name
+            imgTo.image     = UIImage(named: (toSelected as! Account).image!)
+        }
+        
+    }
+}
 
 //MARK: -  LayoutUI
 
@@ -226,11 +301,15 @@ extension TransactionViewController {
         if transactrionType == TransactionType.Transfer {
             lblTo.text      = "To"
             lblToTitle.text = "Account"
-            imgTo.image     = UIImage(systemName: "creditcard.fill")
+            lblFrom.text    = "From"
+            
+            imgTo.image     = SFSymbol.fromAccount
         } else {
             lblTo.text      = "Category"
             lblToTitle.text = "Category"
-            imgTo.image     = UIImage(systemName: "tag.fill")
+            lblFrom.text    = "Account"
+            
+            imgTo.image     = SFSymbol.toCategory
         }
     }
     

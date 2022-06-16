@@ -9,10 +9,14 @@
 /* Begin PBXBuildFile section */
 		2B2370C126357FDBA9FE9B15 /* libPods-MyMoney.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37A292F6A82576440E83B5D3 /* libPods-MyMoney.a */; };
 		F432959F27DBD19800AFAA7C /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F432959E27DBD19800AFAA7C /* Roboto-Bold.ttf */; };
+		F4411CF1285BC0E4002D14B3 /* StorageDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4411CF0285BC0E4002D14B3 /* StorageDataManager.swift */; };
+		F4411CF3285BC2C9002D14B3 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4411CF2285BC2C9002D14B3 /* CategoryManager.swift */; };
+		F4411CF5285BC365002D14B3 /* BudgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4411CF4285BC365002D14B3 /* BudgetManager.swift */; };
+		F4411CF7285BC371002D14B3 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4411CF6285BC371002D14B3 /* AccountManager.swift */; };
+		F4411CF9285BC43E002D14B3 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4411CF8285BC43E002D14B3 /* TransactionManager.swift */; };
 		F44DD84D281C5E3D00100703 /* AccountSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DD84C281C5E3D00100703 /* AccountSelectionViewController.swift */; };
 		F44DD853281C631400100703 /* SelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DD851281C631400100703 /* SelectionCell.swift */; };
 		F44DD854281C631400100703 /* SelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F44DD852281C631400100703 /* SelectionCell.xib */; };
-		F45410FC280F2C0800EC5004 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45410FB280F2C0700EC5004 /* CoreDataManager.swift */; };
 		F458659E2807B40F0055F2C9 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458659D2807B40F0055F2C9 /* IconCell.swift */; };
 		F45865F62807CAE30055F2C9 /* 19.png in Resources */ = {isa = PBXBuildFile; fileRef = F45865A02807CAD50055F2C9 /* 19.png */; };
 		F45865F72807CAE30055F2C9 /* 20.png in Resources */ = {isa = PBXBuildFile; fileRef = F45865A12807CAD50055F2C9 /* 20.png */; };
@@ -157,6 +161,7 @@
 		F4C79AA127FF4BB1001AC974 /* ac_8.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C79A8D27FF4BB1001AC974 /* ac_8.png */; };
 		F4C79AA227FF4BB1001AC974 /* ac_5.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C79A8E27FF4BB1001AC974 /* ac_5.png */; };
 		F4C79AA327FF4BB1001AC974 /* ac_6.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C79A8F27FF4BB1001AC974 /* ac_6.png */; };
+		F4C9B0A4284F8A47009B03F6 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C9B0A3284F8A47009B03F6 /* String+Ext.swift */; };
 		F4E1743127E17E0F009D0DC8 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1743027E17E0F009D0DC8 /* AppManager.swift */; };
 		F4E225512846911300F2D433 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E225502846911300F2D433 /* Date+Ext.swift */; };
 		F4E225542846946600F2D433 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E225532846946600F2D433 /* FloatingActionButton.swift */; };
@@ -192,10 +197,14 @@
 		B6C76C9B0D4477EA2F177CA1 /* Pods-MyMoney.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyMoney.debug.xcconfig"; path = "Target Support Files/Pods-MyMoney/Pods-MyMoney.debug.xcconfig"; sourceTree = "<group>"; };
 		E1BE2FE7F8822E62F8271F98 /* Pods-ExpenseTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpenseTracker.release.xcconfig"; path = "Target Support Files/Pods-ExpenseTracker/Pods-ExpenseTracker.release.xcconfig"; sourceTree = "<group>"; };
 		F432959E27DBD19800AFAA7C /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		F4411CF0285BC0E4002D14B3 /* StorageDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageDataManager.swift; sourceTree = "<group>"; };
+		F4411CF2285BC2C9002D14B3 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
+		F4411CF4285BC365002D14B3 /* BudgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetManager.swift; sourceTree = "<group>"; };
+		F4411CF6285BC371002D14B3 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
+		F4411CF8285BC43E002D14B3 /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
 		F44DD84C281C5E3D00100703 /* AccountSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSelectionViewController.swift; sourceTree = "<group>"; };
 		F44DD851281C631400100703 /* SelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCell.swift; sourceTree = "<group>"; };
 		F44DD852281C631400100703 /* SelectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectionCell.xib; sourceTree = "<group>"; };
-		F45410FB280F2C0700EC5004 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		F458659D2807B40F0055F2C9 /* IconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCell.swift; sourceTree = "<group>"; };
 		F45865A02807CAD50055F2C9 /* 19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 19.png; sourceTree = "<group>"; };
 		F45865A12807CAD50055F2C9 /* 20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 20.png; sourceTree = "<group>"; };
@@ -344,6 +353,7 @@
 		F4C79A8D27FF4BB1001AC974 /* ac_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ac_8.png; sourceTree = "<group>"; };
 		F4C79A8E27FF4BB1001AC974 /* ac_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ac_5.png; sourceTree = "<group>"; };
 		F4C79A8F27FF4BB1001AC974 /* ac_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ac_6.png; sourceTree = "<group>"; };
+		F4C9B0A3284F8A47009B03F6 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		F4E1743027E17E0F009D0DC8 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		F4E225502846911300F2D433 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		F4E225532846946600F2D433 /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
@@ -414,6 +424,18 @@
 				F47E8A1C2812F8F800091A54 /* AlertView.swift */,
 			);
 			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		F4411CEF285BC0D5002D14B3 /* CoreDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				F4411CF2285BC2C9002D14B3 /* CategoryManager.swift */,
+				F4411CF4285BC365002D14B3 /* BudgetManager.swift */,
+				F4411CF6285BC371002D14B3 /* AccountManager.swift */,
+				F4411CF8285BC43E002D14B3 /* TransactionManager.swift */,
+				F4411CF0285BC0E4002D14B3 /* StorageDataManager.swift */,
+			);
+			path = CoreDataManager;
 			sourceTree = "<group>";
 		};
 		F44DD84E281C62BE00100703 /* SelectionCell */ = {
@@ -794,6 +816,7 @@
 				F4F998822845514500EE6F4E /* UIView+Ext.swift */,
 				F4F998842845559400EE6F4E /* UIScrollView+Ext.swift */,
 				F4E225502846911300F2D433 /* Date+Ext.swift */,
+				F4C9B0A3284F8A47009B03F6 /* String+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -801,8 +824,8 @@
 		F4F9987228453BC200EE6F4E /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				F4411CEF285BC0D5002D14B3 /* CoreDataManager */,
 				F4E1743027E17E0F009D0DC8 /* AppManager.swift */,
-				F45410FB280F2C0700EC5004 /* CoreDataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1115,6 +1138,7 @@
 				F4B805112810A8A5007B15B7 /* SetBudgetCell.swift in Sources */,
 				F46CAE3827E19A7F004B588E /* CategoryViewController.swift in Sources */,
 				F4C0215327FB5CD8009CC422 /* AccountViewController.swift in Sources */,
+				F4411CF7285BC371002D14B3 /* AccountManager.swift in Sources */,
 				F4E1743127E17E0F009D0DC8 /* AppManager.swift in Sources */,
 				F46CAE3E27E19EAF004B588E /* TapBarViewController.swift in Sources */,
 				F44DD853281C631400100703 /* SelectionCell.swift in Sources */,
@@ -1122,19 +1146,23 @@
 				F4F9987B28453CAF00EE6F4E /* UINavigationBar+Ext.swift in Sources */,
 				F45D6F4527DAE255009C88C7 /* AppDelegate.swift in Sources */,
 				F44DD84D281C5E3D00100703 /* AccountSelectionViewController.swift in Sources */,
+				F4411CF1285BC0E4002D14B3 /* StorageDataManager.swift in Sources */,
 				F4C0214E27FB5C7A009CC422 /* AnalysisViewController.swift in Sources */,
 				F4F998832845514500EE6F4E /* UIView+Ext.swift in Sources */,
 				F481D89B27FD2775007AD217 /* CategoryCell.swift in Sources */,
 				F4E225512846911300F2D433 /* Date+Ext.swift in Sources */,
 				F4AAF41627FE123A00C9F4E4 /* AddCategoryViewController.swift in Sources */,
 				F47E8A1D2812F8F800091A54 /* AlertView.swift in Sources */,
-				F45410FC280F2C0800EC5004 /* CoreDataManager.swift in Sources */,
+				F4411CF9285BC43E002D14B3 /* TransactionManager.swift in Sources */,
 				F481D8A727FD32D4007AD217 /* TableviewSection.swift in Sources */,
 				F46CAE3027E199D5004B588E /* RecordsViewController.swift in Sources */,
 				F4A1C2FD2810EC4D00B57986 /* CustomBubbleView.swift in Sources */,
 				F45D6F4727DAE255009C88C7 /* SceneDelegate.swift in Sources */,
 				F4F9988128454C0500EE6F4E /* UIColor+Ext.swift in Sources */,
 				F45D6F8627DB2354009C88C7 /* OnBoardingView.swift in Sources */,
+				F4C9B0A4284F8A47009B03F6 /* String+Ext.swift in Sources */,
+				F4411CF3285BC2C9002D14B3 /* CategoryManager.swift in Sources */,
+				F4411CF5285BC365002D14B3 /* BudgetManager.swift in Sources */,
 				F481D89327FCD732007AD217 /* DatePickerDialog.swift in Sources */,
 				F4F9987728453C3B00EE6F4E /* Double+Ext.swift in Sources */,
 				F4E225542846946600F2D433 /* FloatingActionButton.swift in Sources */,
