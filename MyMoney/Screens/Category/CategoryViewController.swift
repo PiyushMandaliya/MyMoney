@@ -11,10 +11,9 @@ import CoreData
 class CategoryViewController: UIViewController {
     
     @IBOutlet weak var categoryTableView: UITableView!
-
-    var categoriesDict  = [String: [Category]]()
-    let context         = CoreDataManager.shared.persistentContainer.viewContext
     
+    var categoriesDict  = [String: [Category]]()
+    var categoryManager: CategoryManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +21,7 @@ class CategoryViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        categoryManager = CategoryManager()
         loadCategories()
         categoryTableView.delegate      = self
         categoryTableView.dataSource    = self
@@ -34,19 +34,19 @@ class CategoryViewController: UIViewController {
 
 //MARK: -  Data Manipulation
 extension CategoryViewController{
+    
     func loadCategories() {
-        if let Categories = CoreDataManager.shared.getCategories() {
-            categoriesDict.removeAll()
-            categoriesDict[defaulData.categoryType[0]] = Categories.filter({$0.type == defaulData.categoryType[0]})
-            categoriesDict[defaulData.categoryType[1]] = Categories.filter({$0.type == defaulData.categoryType[1]})
-        }
+        let result = categoryManager.fetch()
+        categoriesDict.removeAll()
+        categoriesDict[defaulData.categoryType[0]] = result.filter({$0.type == defaulData.categoryType[0]})
+        categoriesDict[defaulData.categoryType[1]] = result.filter({$0.type == defaulData.categoryType[1]})
     }
     
     func deleteModel(at indexPath: IndexPath){
+        let index = indexPath.row
         let type = defaulData.categoryType[indexPath.section]
-        self.context.delete((self.categoriesDict[type]?[indexPath.row])!)
-        CoreDataManager.shared.saveContext()
-        self.categoriesDict[type]?.remove(at: indexPath.row)
+        categoryManager.delete(category: self.categoriesDict[type]![index])
+        self.categoriesDict[type]?.remove(at: index)
         self.categoryTableView.deleteRows(at: [indexPath], with: .left)
     }
     
@@ -69,13 +69,13 @@ extension CategoryViewController{
                 handler: { _ in
                     self.dismiss(animated: true)
                 }))
-                
+        
         self.present(alert,
                      animated: true,
                      completion: nil
         )
     }
-        
+    
     @objc func addCategoryPressed() {
         let addCategoryVC = self.storyboard?.instantiateViewController(withIdentifier: "AddCategoryViewController") as! AddCategoryViewController
         addCategoryVC.delegate = self
@@ -104,30 +104,30 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
-
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-        
+    
     
     func tableView(
         _ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
         
         let deleteAction = UIContextualAction(style: .normal, title: nil,
-            handler: { (_, _, completionHandler) in
-                self.deleteConfirmation(at: indexPath)
-                completionHandler(true)
-            }
+                                              handler: { (_, _, completionHandler) in
+            self.deleteConfirmation(at: indexPath)
+            completionHandler(true)
+        }
         )
         deleteAction.image = SFSymbol.deleteAction
         deleteAction.backgroundColor = Color.red
         
         let editAction = UIContextualAction(style: .normal, title: nil,
-            handler: { (_, _, completionHandler) in
-                self.updateModel(at: indexPath)
-                completionHandler(true)
-            }
+                                            handler: { (_, _, completionHandler) in
+            self.updateModel(at: indexPath)
+            completionHandler(true)
+        }
         )
         
         editAction.image = SFSymbol.editAction
@@ -149,7 +149,7 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource{
 
 
 extension CategoryViewController: CategoryDataDelegateProtocol {
-
+    
     func sendDataToCategoryViewController(category: Category, isUpdate: Bool) {
         if isUpdate == true{
             loadCategories()

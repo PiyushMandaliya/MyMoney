@@ -84,6 +84,10 @@ enum SFSymbol {
     static let deleteAction = UIImage(systemName: "trash",withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .regular))
     
     static let editAction   = UIImage(systemName: "square.and.pencil",withConfiguration: UIImage.SymbolConfiguration(pointSize: 18,weight: .regular))
+    
+    static let fromAccount  = UIImage(systemName: "creditcard.fill")
+    static let toCategory   = UIImage(systemName: "tag.fill")
+    static let setting      = UIImage(systemName: "gear")
 }
 
 enum Color {

@@ -7,14 +7,20 @@
 
 import UIKit
 
+protocol SelectionDelegate: AnyObject {
+    func didSelectAccount(selectedAccount: Account)
+    func didSelectCategory(selectedCategory: Any)
+}
+
 class AccountSelectionViewController: UIViewController, UISheetPresentationControllerDelegate {
     
     @IBOutlet weak var btnAdd: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     
     var data: [Any] = [Any]()
-    var selectedData: Any? = nil
-    var isAccountSelection = false
+    var isAccountSelection  = false
+    var isToSelection     = false
+    weak var delegate: SelectionDelegate!
     
     override var sheetPresentationController: UISheetPresentationController{
         presentationController as! UISheetPresentationController
@@ -22,6 +28,8 @@ class AccountSelectionViewController: UIViewController, UISheetPresentationContr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let buttonTitle = "Manage \(isAccountSelection ? "Account" : "Category")"
+        btnAdd.setTitle(buttonTitle, for: .normal)
         configureColletionView()
     }
 }
@@ -30,7 +38,8 @@ class AccountSelectionViewController: UIViewController, UISheetPresentationContr
 extension AccountSelectionViewController {
     
     @IBAction func addActionPressed(_ sender: UIButton) {
-    
+        let accountSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryViewController") as! CategoryViewController
+        present(accountSelectionVC, animated: true, completion: nil)
     }
 }
 
@@ -63,8 +72,16 @@ extension AccountSelectionViewController: UICollectionViewDataSource, UICollecti
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedData = data[indexPath.row]
         self.dismiss(animated: true)
+        if isAccountSelection {
+            if isToSelection {
+                delegate.didSelectCategory(selectedCategory: data[indexPath.row] as! Account)
+            } else {
+                delegate.didSelectAccount(selectedAccount: data[indexPath.row] as! Account)
+            }
+        }else {
+            delegate.didSelectCategory(selectedCategory: data[indexPath.row] as! Category)
+        }
     }
 }
 

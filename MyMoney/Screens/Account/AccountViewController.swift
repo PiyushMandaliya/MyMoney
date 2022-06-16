@@ -15,7 +15,7 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var lblTotal: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    let context                 = CoreDataManager.shared.persistentContainer.viewContext
+    let accountManager = AccountManager()
     var accounts: [Account]?    = [Account]()
 
     override func viewDidLoad() {
@@ -42,9 +42,10 @@ extension AccountViewController{
     
     func loadAccounts()
     {
-        if let allAccounts = CoreDataManager.shared.getAccounts() {
+        let result = accountManager.fetch()
+        if result.count > 0 {
             accounts?.removeAll()
-            accounts = allAccounts
+            accounts = result
         }
     }
     
@@ -57,8 +58,7 @@ extension AccountViewController{
     
     
     func deleteModel(at indexPath: IndexPath){
-        self.context.delete((self.accounts![indexPath.row]))
-        CoreDataManager.shared.saveContext()
+        accountManager.delete(account: self.accounts![indexPath.row])
         self.accounts?.remove(at: indexPath.row)
         self.tableView.deleteRows(at: [indexPath], with: .left)
     }
@@ -158,7 +158,6 @@ extension AccountViewController: AccountDataDelegateProtocol {
 extension AccountViewController {
     func configNavigationItems(){
         title = "Accounts"
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addAccountPressed))
     }
 }

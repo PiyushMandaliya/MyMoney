@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 
 class BudgetsViewController: UIViewController {
     
@@ -14,7 +13,9 @@ class BudgetsViewController: UIViewController {
     
     var budgetCategories = [Category]()
     var nonBudgetCategories = [Category]()
-    let context = CoreDataManager.shared.persistentContainer.viewContext
+
+    let categoryManager = CategoryManager()
+    let budgetManager = BudgetManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +40,14 @@ class BudgetsViewController: UIViewController {
 //MARK: -  Data Manipulation
 extension BudgetsViewController{
     
-    func loadCategories(request : NSFetchRequest<Category> = Category.fetchRequest()) {
-        if let Categories = CoreDataManager.shared.getCategories() {
+    func loadCategories() {
+        let categories = categoryManager.fetch()
+        if categories.count > 0 {
             budgetCategories.removeAll()
             nonBudgetCategories.removeAll()
             
-            budgetCategories = Categories.filter({$0.type == defaulData.categoryType[1] && $0.budget != nil})
-            nonBudgetCategories = Categories.filter({$0.type == defaulData.categoryType[1] && $0.budget == nil})
+            budgetCategories = categories.filter({$0.type == defaulData.categoryType[1] && $0.budget != nil})
+            nonBudgetCategories = categories.filter({$0.type == defaulData.categoryType[1] && $0.budget == nil})
             
             tableView.reloadData()
         }
@@ -61,17 +63,19 @@ extension BudgetsViewController{
                 }
             }
         }
-                                                      , cancelHandler: {_ in
+                                                            , cancelHandler: {_ in
             self.dismiss(animated: true)
         })
         present(alert, animated: true, completion: nil)
     }
     
     func saveBudget(limit value: Double, at indexPath: IndexPath){
-        let updatedCategory = CoreDataManager.shared.setBudget(for: nonBudgetCategories[indexPath.row], limit: value)
+        let category = nonBudgetCategories[indexPath.row]
+        let budget = budgetManager.create(limit: value)
+        
+        let budgetCategory = categoryManager.setBudget(for: category, with: budget)
         nonBudgetCategories.remove(at: indexPath.row)
-        budgetCategories.append(updatedCategory)
-        CoreDataManager.shared.saveContext()
+        budgetCategories.append(budgetCategory)
         tableView.reloadData()
     }
     
@@ -82,28 +86,21 @@ extension BudgetsViewController{
             if let inputLimit = input {
                 let limit = Double(inputLimit)
                 if limit != nil {
-                    self.updateBudget(limit: limit!,at: indexPath)
+                    self.budgetManager.update(category: self.budgetCategories[indexPath.row], limit: limit!)
+                    self.tableView.reloadData()
+                    
                 }
             }
         }, cancelHandler: { _ in self.dismiss(animated: true) })
         present(alert, animated: true, completion: nil)
-
+        
     }
-    
-    func updateBudget(limit value: Double, at indexPath: IndexPath){
-        let category            = budgetCategories[indexPath.row]
-        category.budget?.limit  = value
-        CoreDataManager.shared.saveContext()
-        tableView.reloadData()
-    }
-    
-    
+        
     func deleteModel(at indexPath: IndexPath) {
         let nonBudgetCategory   = budgetCategories[indexPath.row]
         let budget              = nonBudgetCategory.budget
-        self.context.delete(budget!)
+        budgetManager.delete(budget!)
         nonBudgetCategory.budget = nil
-        CoreDataManager.shared.saveContext()        
         budgetCategories.remove(at: indexPath.row)
         nonBudgetCategories.append(nonBudgetCategory)
         loadCategories()
@@ -122,7 +119,7 @@ extension BudgetsViewController{
                 handler: { _ in
                     self.dismiss(animated: true)
                 }))
-                
+        
         self.present(alert,
                      animated: true,
                      completion: nil
@@ -170,22 +167,22 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.section == 0 {
             let deleteAction = UIContextualAction(style: .normal, title: nil,
-                handler: {  [weak self]  (_, _, completionHandler) in
-                    guard let self = self else {return}
-                    self.deleteConfirmation(at: indexPath)
-                    completionHandler(true)
-                }
+                                                  handler: {  [weak self]  (_, _, completionHandler) in
+                guard let self = self else {return}
+                self.deleteConfirmation(at: indexPath)
+                completionHandler(true)
+            }
             )
             deleteAction.image              = SFSymbol.deleteAction
             deleteAction.backgroundColor    = Color.red
             
             
             let editAction = UIContextualAction( style: .normal, title: nil,
-                handler: { [weak self] (_, _, completionHandler) in
-                    guard let self = self else {return}
-                    self.updateModel(at: indexPath)
-                    completionHandler(true)
-                }
+                                                 handler: { [weak self] (_, _, completionHandler) in
+                guard let self = self else {return}
+                self.updateModel(at: indexPath)
+                completionHandler(true)
+            }
             )
             
             editAction.image                = SFSymbol.editAction

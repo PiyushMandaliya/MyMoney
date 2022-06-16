@@ -8,7 +8,8 @@
 import UIKit
 
 @IBDesignable class BorderView: UIView {
-    
+    var keyPath: Bool = false
+
     @IBInspectable var borderWidth: CGFloat = 0.0{
         didSet{
             self.layer.borderWidth = borderWidth
@@ -33,5 +34,4 @@ import UIKit
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
     }
-    
 }

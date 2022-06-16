@@ -13,22 +13,39 @@ class RecordsViewController: UIViewController
 {
     @IBOutlet weak var chartView: PieChartView!
     
+    
     private var floatingButton = FloatingActionButton()
+    private let transactionManager = TransactionManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configNavigationItems()
         configureChart()
+        getData()
     }
     
     override func viewDidLayoutSubviews() {
         configureFloatingButton()
+    }
+    
+    func getData() {
+        let transactions = transactionManager.fetch()
+        for transaction in transactions {
+            if transaction.type == TransactionType.Transfer, let toAccount = transaction.toAccount {
+                print( transaction.fromAccount?.name, toAccount.name, transaction.amount)
+            }else {
+                print(transaction.fromAccount?.name, transaction.toCategory?.name)
+            }
+        }
+
     }
 }
 
 
 //MARK: -  Outlet Actions
 extension RecordsViewController {
+    
+    
     
     @objc func didTapButton() {
         let storyboard              = UIStoryboard(name: "Main", bundle: nil)
@@ -60,10 +77,10 @@ extension RecordsViewController {
     }
     
     func configNavigationItems(){
-        self.navigationItem.title               = "Expense Tracker"
+        self.navigationItem.title               = "MyMoney"
 
         self.navigationItem.rightBarButtonItem  = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
-        self.navigationItem.leftBarButtonItem   = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: nil)
+        self.navigationItem.leftBarButtonItem   = UIBarButtonItem(image: SFSymbol.setting, style: .done, target: self, action: nil)
     }
     
     

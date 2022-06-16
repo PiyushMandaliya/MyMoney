@@ -20,9 +20,8 @@ class AddAccountViewController: UIViewController {
     var selectedImage: String?
     var isUpdate: Bool              = false
     var selectedAccount: Account?   = nil
-    let context                     = CoreDataManager.shared.persistentContainer.viewContext
     weak var delegate: AccountDataDelegateProtocol? = nil
-
+    let accountManager = AccountManager()
 
     func set(delegate: AccountDataDelegateProtocol, selectedAccount: Account?) {
         self.delegate           = delegate
@@ -43,7 +42,7 @@ class AddAccountViewController: UIViewController {
 extension AddAccountViewController {
     
     func setDefaultValues(){
-        if selectedAccount != nil{
+        if selectedAccount != nil {
             tfName.text             = selectedAccount?.name
             tfInitialAmount.text    = (String(describing: selectedAccount?.initial_amount ?? 0))
         }
@@ -53,20 +52,16 @@ extension AddAccountViewController {
     func saveOrUpdateAccount(_ name: String, _ initialBalance: String, _ image: String ){
         var newAccount: Account!
         if isUpdate == true && selectedAccount != nil {
-            newAccount = selectedAccount!
+            accountManager.update(account: selectedAccount!, name: name, image: image, initialAmount: initialBalance)
+            newAccount = selectedAccount
         }else{
-            newAccount = Account(context: self.context)
+            newAccount = accountManager.create(name: name, image: image, initialAmount: initialBalance)
         }
-        
-        newAccount.image            = image
-        newAccount.name             = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        newAccount.initial_amount   = NSDecimalNumber(value: NSString(string: initialBalance).doubleValue)
-        self.persistAccount(newAccount)
+        self.callDelegate(newAccount)
     }
     
     
-    func persistAccount(_ newAccount: Account){
-        CoreDataManager.shared.saveContext()
+    func callDelegate(_ newAccount: Account){
         if self.delegate != nil {
             self.delegate?.sendDataToCategoryViewController(account: newAccount, isUpdate: isUpdate)
         }
